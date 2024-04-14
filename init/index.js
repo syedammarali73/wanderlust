@@ -1,8 +1,13 @@
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js")
+const dotenv = require("dotenv");
+dotenv.config({
+    path: './.env'
+});
 
-const MONGO_URL = 'mongodb://syedammarali73:mYdTrtLKR8wyfOgS@ac-ipboakd-shard-00-00.9bfztoe.mongodb.net:27017,ac-ipboakd-shard-00-01.9bfztoe.mongodb.net:27017,ac-ipboakd-shard-00-02.9bfztoe.mongodb.net:27017/?ssl=true&replicaSet=atlas-ybyi77-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0'
+
+const MONGO_URL = process.env.MONGO_URI;
 main().then(()=>{
     console.log("connected to DB");
 })
