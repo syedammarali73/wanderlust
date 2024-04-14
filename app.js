@@ -3,19 +3,19 @@ const app = express();
 const port = 3000;
 const path = require("path");
 const mongoose = require('mongoose');
-// const DB_NAME = "wanderlust";
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session")
 const dotenv = require("dotenv");
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
 const flash = require("connect-flash")
 const passport = require("passport")
 const LocalStrategy = require("passport-local")
 const User = require("./models/user.js");
 
+const listingsRouter = require("./routes/listing.js");
+const reviewsRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js")
 
 dotenv.config({
     path: './.env'
@@ -69,18 +69,19 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get("/demouser", async (req, res)=> {
-    let fakeUser = new User({
-        email : "student@gmail.com",
-        username: "delta-student"
-    });
-    //                      password
-    let registeredUser = await User.register(fakeUser, "helloworld")
-    res.send(registeredUser)
-})
+// app.get("/demouser", async (req, res)=> {
+//     let fakeUser = new User({
+//         email : "student@gmail.com",
+//         username: "delta-student"
+//     });
+//     //                      password
+//     let registeredUser = await User.register(fakeUser, "helloworld")
+//     res.send(registeredUser)
+// })
 
-app.use("/listings", listings);
-app.use('/listings/:id/reviews', reviews)
+app.use("/listings", listingsRouter);
+app.use('/listings/:id/reviews', reviewsRouter)
+app.use("/", userRouter)
 
 app.all("*", (req, res, next)=>{
     next(new ExpressError(404, "Page Not Found"))
