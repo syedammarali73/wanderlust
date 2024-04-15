@@ -6,16 +6,17 @@ const { saveRedirectUrl } = require("../middleware");
 const { signUp, renderloginForm, postLogin, logout } = require("../controllers/user");
 const router = express.Router();
 
-router.get("/signup", (req, res)=> {
+router.route("/signup")
+
+.get((req, res)=> {
     res.render("users/signup.ejs")
 })
+.post( wrapAsync(signUp))
 
-router.post("/signup", wrapAsync(signUp))
 
-router.get("/login", renderloginForm)
-
-router.post(
-    "/login", 
+router.route("/login")
+.get(renderloginForm)
+.post(
     saveRedirectUrl,
     passport.authenticate("local",{
         failureRedirect: '/login', 
