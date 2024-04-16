@@ -11,9 +11,8 @@ const listingSchema = new Schema({
         type: String,
     },
     image: {
-        type: String,
-        default: `https://unsplash.com/photos/landmark-photography-of-trees-near-rocky-mountain-under-blue-skies-daytime-ndN00KmbJ1c`,
-        set: (v) => v === "" ? "https://unsplash.com/photos/landmark-photography-of-trees-near-rocky-mountain-under-blue-skies-daytime-ndN00KmbJ1c" : v,
+        url: String,
+        filename: String,
     },
     price: Number,
     location: String,
