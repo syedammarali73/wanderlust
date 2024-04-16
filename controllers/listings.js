@@ -25,8 +25,10 @@ module.exports.showListing = async (req, res) => {
         req.flash("error", "Requested listing does not exists!")
         return res.redirect('/listings')
     }
-    // console.log(listing);
-    return res.render("listings/show.ejs", {listing})
+    let originalImageUrl = listing.image.url;
+    originalImageUrl = originalImageUrl.replace("/upload", "/upload/c_fit,w_750/")
+    
+    return res.render("listings/show.ejs", {listing , originalImageUrl})
 }
 
 module.exports.createListing = async (req, res)=>{
@@ -49,7 +51,13 @@ module.exports.renderEditForm = async (req, res)=>{
         req.flash("error", "Requested listing does not exists!")
         return res.redirect('/listings')
     }
-    return res.render("listings/edit.ejs", {listing})
+    
+    let originalImageUrl = listing.image.url;
+    https://res.cloudinary.com/dxlzhknzv/image/upload/c_fit,w_750/cld-sample.jpg
+    originalImageUrl = originalImageUrl.replace("/upload", "/upload/c_fit,w_250/")
+    
+    console.log("originalImageUrl",originalImageUrl);
+    return res.render("listings/edit.ejs", {listing, originalImageUrl})
 }
 
 module.exports.updateListing = async (req, res) => {
